@@ -7,17 +7,16 @@ spec:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:latest
     args:
-    - "--dockerfile=/"
-    - "--context=https://github.com/scriptcamp/kubernetes-kaniko.git"
-    - "--destination=kaniko-test-image:latest"
+    - "--context=git://github.com/scriptcamp/kubernetes-kaniko"
+    - "--destination=bibinwilson/kaniko-test-image:1.0"
     volumeMounts:
     - name: kaniko-secret
-      mountPath: /secret
-    env:
-    - name: GOOGLE_APPLICATION_CREDENTIALS
-      value: /secret/kaniko-secret.json
+      mountPath: /kaniko/.docker
   restartPolicy: Never
   volumes:
   - name: kaniko-secret
     secret:
-      secretName: kaniko-secret
+      secretName: dockercred
+      items:
+        - key: .dockerconfigjson
+          path: config.json

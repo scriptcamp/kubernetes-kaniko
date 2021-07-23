@@ -1,3 +1,3 @@
-FROM nginx:latest
+FROM ubuntu:latest
 
 RUN apt-get update -y

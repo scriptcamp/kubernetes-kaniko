@@ -1,3 +1,5 @@
 # Ignore Mac system files
 .DS_store
+
+#
 manifests/docker-hub/mysecret.json

@@ -7,9 +7,9 @@ spec:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:latest
     args:
-    - "--dockerfile=<path to Dockerfile within the build context>"
-    - "--context=gs://<GCS bucket>/<path to .tar.gz>"
-    - "--destination=<gcr.io/$PROJECT/$IMAGE:$TAG>"
+    - "--dockerfile=/"
+    - "--context=https://github.com/scriptcamp/kubernetes-kaniko.git"
+    - "--destination=kaniko-test-image:latest"
     volumeMounts:
     - name: kaniko-secret
       mountPath: /secret

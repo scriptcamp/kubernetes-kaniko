@@ -12,9 +12,9 @@ podTemplate(yaml: '''
       - name: kaniko
         image: gcr.io/kaniko-project/executor:debug
         command:
-        - sleep
+        - /busybox/sleep
         args:
-        - 9999999
+        - infinity
         volumeMounts:
         - name: kaniko-secret
           mountPath: /kaniko/.docker

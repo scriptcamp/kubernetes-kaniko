@@ -22,7 +22,7 @@ spec:
         - key: .dockerconfigjson
           path: config.json
 ''') {
-  node(any) {
+  node(POD_LABEL) {
     stage('Get a Maven project') {
       git url: 'https://github.com/scriptcamp/kubernetes-kaniko.git', branch: 'main'
       container('maven') {

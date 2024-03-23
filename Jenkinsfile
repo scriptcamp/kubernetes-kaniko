@@ -9,7 +9,8 @@ containers:
     gcr.io/kaniko-project/executor:latest
     args:
     - "--context=git://github.com/scriptcamp/kubernetes-kaniko"
-    - "--destination=limacadmin/kaniko-demo-image:1.0" volumeMounts:
+    - "--destination=limacadmin/kaniko-demo-image:1.0" 
+    volumeMounts:
     - name: kaniko-secret
     mountPath:
     /kaniko/.docker 
@@ -22,7 +23,7 @@ Never volumes:
         dockercred items:
             - key: 
                 .dockerconfigjson
-    path: config.json
+                path: config.json
 ''') {
   node(POD_LABEL) {
     stage('Get a Maven project') {

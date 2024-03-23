@@ -1,3 +1,4 @@
+podTemplate(yaml: '''
 apiVersion: v1 
 kind: Pod metadata:
 name: 
@@ -23,7 +24,7 @@ Never volumes:
             - key: 
                 .dockerconfigjson
                 path: config.json
-{
+''') {
   node(POD_LABEL) {
     stage('Get a Maven project') {
       git url: 'https://github.com/scriptcamp/kubernetes-kaniko.git', branch: 'main'

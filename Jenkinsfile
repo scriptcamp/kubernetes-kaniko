@@ -6,8 +6,7 @@ kind: Pod
 spec:
 containers:
 - name: kaniko
-    image: 
-    gcr.io/kaniko-project/executor:latest
+    image: gcr.io/kaniko-project/executor:latest
     args:
     - "--context=git://github.com/scriptcamp/kubernetes-kaniko"
     - "--destination=limacadmin/kaniko-demo-image:1.0" 

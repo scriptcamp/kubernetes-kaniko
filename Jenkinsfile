@@ -24,28 +24,4 @@ Never volumes:
             - key: 
                 .dockerconfigjson
                 path: config.json
-''') {
-  node(POD_LABEL) {
-    stage('Get a Maven project') {
-      git url: 'https://github.com/scriptcamp/kubernetes-kaniko.git', branch: 'main'
-      container('maven') {
-        stage('Build a Maven project') {
-          sh '''
-          echo pwd
-          '''
-        }
-      }
-    }
-
-    stage('Build Java Image') {
-      container('kaniko') {
-        stage('Build a Go project') {
-          sh '''
-            /kaniko/executor --context `pwd` --destination bibinwilson/hello-kaniko:1.0
-          '''
-        }
-      }
-    }
-
-  }
-}
+''') 

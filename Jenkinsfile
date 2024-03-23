@@ -2,7 +2,7 @@ podTemplate(yaml: '''
 apiVersion: v1 
 kind: Pod 
 //metadata:
-//name: kaniko 
+name: kaniko 
 spec:
 containers:
 - name: kaniko

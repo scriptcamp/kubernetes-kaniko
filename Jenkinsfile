@@ -1,6 +1,8 @@
 podTemplate(yaml: '''
 apiVersion: v1 
-kind: Pod metadata:
+//kind: Pod metadata:
+kind: Pod
+
 name: 
 kaniko spec:
 containers:

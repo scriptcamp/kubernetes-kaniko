@@ -1,8 +1,8 @@
 podTemplate(yaml: '''
 apiVersion: v1 
 kind: Pod 
-metadata:
-name: kaniko 
+//metadata:
+//name: kaniko 
 spec:
 containers:
 - name: kaniko
@@ -21,7 +21,7 @@ volumes:
         secretName: dockercred 
         items:
             - key: .dockerconfigjson
-                path: config.json
+              path: config.json
 ''') {
   node(POD_LABEL) {
     stage('Get a Maven project') {

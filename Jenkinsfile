@@ -1,10 +1,8 @@
 podTemplate(yaml: '''
 apiVersion: v1 
-//kind: Pod metadata:
-//name: 
-kind: Pod
-spec:
-//kaniko spec:
+kind: Pod metadata:
+name: 
+kaniko spec:
 containers:
 - name: kaniko
     image: gcr.io/kaniko-project/executor:latest

@@ -53,11 +53,11 @@ pipeline {
                         version = '0.1'
                     }                    
                     // Build and push container if tests succeed
-                        ///docker.build("repository/${imageName}:${version}")
+                        docker.build("repository/${imageName}:${version}")
                     //docker.withRegistry('https://your.docker.registry.url', 'credentials-id') {
-                        ///docker.withRegistry('https://hub.docker.com/repositories/limacadmin', 'limacadmin') {
-                        ///docker.image("repository/${imageName}:${version}").push()
-                        ///}
+                        docker.withRegistry('https://hub.docker.com/repositories/limacadmin', 'limacadmin') {
+                        docker.image("repository/${imageName}:${version}").push()
+                        }
                 }
             }
         }

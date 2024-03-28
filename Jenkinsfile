@@ -1,63 +1,69 @@
 pipeline {
     agent any
-   
+    
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the repository
                 checkout scm
             }
         }
-
+        
         stage('Run Tests') {
-            
             when {
-                // Run tests only on main branch for CodeCoverage
-                branch 'main'
-                // Run the CodeCoverage Test only on the MAIN Branch.
-                expression {
-                    return env.BRANCH_NAME == 'main'
-                }
-              }
-            
+                expression { env.BRANCH_NAME == 'main' }
+            }
             steps {
                 script {
-                    // Example command to run CodeCoverage tests
                     sh 'mvn clean test -P CodeCoverage'
-                    //Running CodeCoverage Test Here
-                    sh 'echo "Running CodeCoverage test"'
                 }
             }
-    }
-
+        }
+        
         stage('Build Container') {
-            
             when {
-                // Build container only for main and feature branches
-                anyOf {
-                    branch 'main'
-                    branch 'feature'
-                }
+                expression { env.BRANCH_NAME != 'playground' }
             }
-            
             steps {
                 script {
-                    // Determine image name and version based on branch
-                    def imageName = ''
-                    def version = ''
+                    def imageName
+                    def imageVersion
+                    
                     if (env.BRANCH_NAME == 'main') {
                         imageName = 'calculator'
-                        version = '1.0'
-                    } else if (env.BRANCH_NAME == 'feature') {
+                        imageVersion = '1.0'
+                    } else {
                         imageName = 'calculator-feature'
-                        version = '0.1'
-                    }                    
-                    // Build and push container if tests succeed
-                        docker.build("repository/${imageName}:${version}")
-                    //docker.withRegistry('https://your.docker.registry.url', 'credentials-id') {
-                        //docker.withRegistry('https://hub.docker.com', 'limacadmin') {
-                        //docker.image("repository/${imageName}:${version}").push()
-                        //}
+                        imageVersion = '0.1'
+                    }
+                    
+                    docker.build("repository/${imageName}:${imageVersion}")
+                }
+            }
+        }
+        
+        stage('Push Container') {
+            when {
+                allOf {
+                    expression { env.BRANCH_NAME != 'playground' }
+                    expression { currentBuild.result == 'SUCCESS' }
+                }
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://hub.docker.com', 'docker-credentials') {
+                        def imageName
+                        def imageVersion
+                        
+                        if (env.BRANCH_NAME == 'main') {
+                            imageName = 'calculator'
+                            imageVersion = '1.0'
+                        } else {
+                            imageName = 'calculator-feature'
+                            imageVersion = '0.1'
+                        }
+                        
+                        docker.image("repository/${imageName}:${imageVersion}").push()
+                    }
                 }
             }
         }
